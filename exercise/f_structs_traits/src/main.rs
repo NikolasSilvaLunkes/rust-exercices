@@ -1,3 +1,4 @@
+
 // 1. Define a trait named `Bite`
 //
 // Define a single required method, `fn bite(self: &mut Self)`.  We will call this method when we
@@ -6,6 +7,9 @@
 //
 //  trait Bite...
 
+trait Bite {
+    fn bite(&mut self) ->&str;
+}
 
 // 2. Now create a struct named Grapes with a field that tracks how many grapes are left.  If you
 // need a hint, look at how it was done for Carrot at the bottom of this file (you should probably
@@ -13,13 +17,38 @@
 //
 // #[derive(Debug)] // include this line right before your struct definition
 // struct Grapes...
-
+#[derive(Debug)]
+struct Grapes {
+    amount_left: i32,
+}
+//impl Grapes{
+//    fn new(amm:i32) -> Self {
+//        Self {ammount: amm}
+//    }
+//}
+#[derive(Debug)]
+struct Carrot {
+    percent_left: f64,
+}
 
 // 3. Implement Bite for Grapes.  When you bite a Grapes, subtract 1 from how many grapes are left.
 // If you need a hint, look at how it was done for Carrot at the bottom of this file.
 //
 // impl Bite for...
 
+impl Bite for Grapes {
+    fn bite(&mut self) ->&str {
+        self.amount_left -= 1;
+        return &"You have bitten it"
+    }
+}
+
+impl Bite for Carrot {
+    fn bite(&mut self) ->&str {
+        self.percent_left -= 20.0;
+        return &"You have bitten it"
+    }
+}
 
 fn main() {
     // Once you finish #1 above, this part should work.
@@ -30,13 +59,14 @@ fn main() {
     // 4. Uncomment and adjust the code below to match how you defined your
     // Grapes struct.
     //
-    //let mut grapes = Grapes { amount_left: 100 };
-    //grapes.bite();
-    //println!("Eat a grape: {:?}", grapes);
+    let mut grapes = Grapes { amount_left: 100 };
+    grapes.bite();
+    println!("Eat a grape: {:?}", grapes);
 
     // Challenge: Uncomment the code below. Create a generic `bunny_nibbles`
     // function that:
     // - takes a mutable reference to any type that implements Bite
+    
     // - calls `.bite()` several times
     // Hint: Define the generic type between the function name and open paren:
     //       fn function_name<T: Bite>(...)
@@ -45,14 +75,19 @@ fn main() {
     //println!("Bunny nibbles for awhile: {:?}", carrot);
 }
 
-#[derive(Debug)] // This enables using the debugging format string "{:?}"
-struct Carrot {
-    percent_left: f32,
+fn bunny_nibbles<T:Bite>(biter: &[T]){
+    biter.bite();
 }
 
-impl Bite for Carrot {
-    fn bite(self: &mut Self) {
-        // Eat 20% of the remaining carrot. It may take awhile to eat it all...
-        self.percent_left *= 0.8;
-    }
-}
+//
+//#[derive(Debug)] // This enables using the debugging format string "{:?}"
+//struct Carrot {
+//    percent_left: f32,
+//}
+//
+//impl Bite for Carrot {
+//    fn bite(self: &mut Self) {
+//        // Eat 20% of the remaining carrot. It may take awhile to eat it all...
+//        self.percent_left *= 0.8;
+//    }
+//}

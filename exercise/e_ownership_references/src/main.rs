@@ -1,5 +1,7 @@
 // Silence some warnings so they don't distract from the exercise.
-#![allow(unused_mut, unused_variables)]
+#![allow(unused_mut, unused_variables, dead_code)]
+
+const CONSTANTE:i32 = 2;
 
 fn main() {
     // This fancy stuff either gets the first argument as a String, or prints
@@ -43,7 +45,9 @@ fn main() {
 
     let mut structest:RedFox = RedFox::new();
     println!("The fox life is: {}",structest.life);
+
     structest.eat();
+
     println!("The fox life has changed to: {}",structest.life);
     // Try running this program with "boat", "banana", and "grapes" as the arguments :-)
 
@@ -58,6 +62,10 @@ fn main() {
     println!("This material is just `{}`.", material);
     bedazzle(&mut material);
     println!("Wow! Now the material is `{}`!", material);
+
+    print_noise(structest);         
+
+
 }
 
 pub fn inspect(s:&str) {
@@ -95,11 +103,14 @@ pub fn no_borrow_test(s:String){
 }
 
 
+
+//Declaring struct (similar to class) called RedFox
 struct RedFox {
     enemy: bool,
     life: i32,
 }
 
+//Implementations (Methods) for the struct redfox
 impl RedFox {
     fn new() -> Self {
         Self { enemy: true, life: 70 }
@@ -108,3 +119,22 @@ impl RedFox {
         self.life += 10;
     }
 }
+
+//Declarating the trait noisy
+trait Noisy {
+    fn get_noise(&self) ->&str;
+}
+
+//Implementing noisy in redfox
+impl Noisy for RedFox {
+    fn get_noise(&self) -> &str { "Meow?" }
+}
+
+
+//A generic function for any struct that implements noisy
+fn print_noise<T: Noisy>(item: T) {
+    println!("{}", item.get_noise());
+}
+
+
+ 
