@@ -67,16 +67,20 @@ fn main() {
     // function that:
     // - takes a mutable reference to any type that implements Bite
     
+
+
     // - calls `.bite()` several times
     // Hint: Define the generic type between the function name and open paren:
     //       fn function_name<T: Bite>(...)
     //
-    //bunny_nibbles(&mut carrot);
-    //println!("Bunny nibbles for awhile: {:?}", carrot);
+    bunny_nibbles(&mut carrot);
+    println!("Bunny nibbles for awhile: {:?}", carrot);
 }
 
-fn bunny_nibbles<T:Bite>(biter: &[T]){
-    biter.bite();
+fn bunny_nibbles<T:Bite>(biter: &mut T){
+    for _ in 1..4 {
+        biter.bite();
+    }
 }
 
 //
