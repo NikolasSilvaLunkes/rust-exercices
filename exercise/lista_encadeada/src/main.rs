@@ -130,7 +130,20 @@ fn main() {
             }
             println!("Action2");
         } else if action=="3"{
+            
+            let mut local:String;
+            'readlocal:loop {
+                print!("{}[2J", 27 as char);
+                println!("Insira o local");
+                local = readinput();
+                local.parse(usize);
+                if local<
+            }
             println!("Insira o valor que deve ser inserido na lista");
+            if valores.len()==0{
+                let valor:Item = Item {value: readinput(), next: 999999999usize};
+                valores.push(valor);
+            }
             println!("Action3");
         } else {
             println!("AAAAA")
