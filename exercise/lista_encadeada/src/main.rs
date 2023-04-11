@@ -62,6 +62,21 @@ pub fn get_last(list:&mut Vec<Item>,pos: usize) -> usize {
     }
 }
 
+pub fn get_from_index(list:&mut Vec<Item>,pos: usize,limit:usize) -> usize {
+    let curval:&Item = &list[pos];
+    print!(", {}",curval.value);
+    
+    if limit == 0 {
+        return pos;
+    }
+    if curval.next==999999999usize{
+        return 999999999usize
+    } else {
+        let limit = limit-1;
+        return get_from_index(list, curval.next,limit);
+    }
+}
+
 #[allow(dead_code)]
 #[derive(Clone)]
 pub struct Item {
@@ -136,8 +151,20 @@ fn main() {
                 print!("{}[2J", 27 as char);
                 println!("Insira o local");
                 local = readinput();
-                local.parse(usize);
-                if local<
+                let mut index:usize;
+                let parse:usize = local.parse().unwrap();
+                if parse<valores.len() {
+                    index = get_from_index(&mut valores,pf,parse);
+                    if index!=999999999usize {
+                        let nextnext = valores[index].next;
+                        let valor:Item = Item {value: readinput(), next: nextnext};
+                        valores.push(valor);
+                        valores[index].next = valores.len()-1usize;
+                        pi = valores.len()-1usize;
+                        break 'readlocal;
+                    }
+                }
+                
             }
             println!("Insira o valor que deve ser inserido na lista");
             if valores.len()==0{
