@@ -123,6 +123,10 @@ fn main() {
             if valores.len()==0{
                 let valor:Item = Item {value: readinput(), next: 999999999usize};
                 valores.push(valor);
+            } else {
+                let valor:Item = Item {value: readinput(), next: pi};
+                valores.push(valor);
+                pi = valores.len()-1usize;
             }
             println!("Action2");
         } else if action=="3"{
