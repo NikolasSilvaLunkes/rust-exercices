@@ -67,9 +67,11 @@ pub fn get_from_index(list:&mut Vec<Item>,pos: usize,limit:usize) -> usize {
     print!(", {}",curval.value);
     
     if limit == 0 {
+        println!("Returned 0");
         return pos;
     }
     if curval.next==999999999usize{
+        println!("{},{}",curval.next,curval.value);
         return 999999999usize
     } else {
         let limit = limit-1;
@@ -148,23 +150,29 @@ fn main() {
             
             let mut local:String;
             'readlocal:loop {
-                print!("{}[2J", 27 as char);
+                //print!("{}[2J", 27 as char);
                 println!("Insira o local");
                 local = readinput();
                 let mut index:usize;
                 let parse:usize = local.parse().unwrap();
                 if parse<valores.len() {
-                    index = get_from_index(&mut valores,pf,parse);
+                    if parse==0usize {
+                        let valor:Item = Item {value: readinput(), next: pi};
+                        valores.push(valor);
+                        pi = valores.len()-1usize;
+                        break 'readlocal;
+                    }
+                    index = get_from_index(&mut valores,pi,parse);
                     if index!=999999999usize {
+                        println!("Insira o valor que deve ser inserido na lista");
                         let nextnext = valores[index].next;
                         let valor:Item = Item {value: readinput(), next: nextnext};
                         valores.push(valor);
                         valores[index].next = valores.len()-1usize;
-                        pi = valores.len()-1usize;
                         break 'readlocal;
                     }
+                println!("{}",index);
                 }
-                
             }
             println!("Insira o valor que deve ser inserido na lista");
             if valores.len()==0{
