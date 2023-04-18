@@ -19,15 +19,15 @@ enum Shot {
 use Shot::*;
 impl Shot {
     // Here is a method for the `Shot` enum you just defined.
-    fn points(self) -> i32 {
+    fn points(&self) -> i32 {
         // 1b. Implement this method to convert a Shot into points
-        match self {
+        match &self {
             // - return 5 points if `self` is a `Shot::Bullseye`
             Bullseye =>{
                 return 5;
             },
             Hit{x} => {
-               if x<3.0{
+               if *x<3.0{
                   // - return 2 points if `self` is a `Shot::Hit(x)` where x < 3.0
                   return 2; 
                } else {
@@ -45,7 +45,7 @@ impl Shot {
 
 fn main() {
     // Simulate shooting a bunch of arrows and gathering their coordinates on the target.
-    let arrow_coords: Vec<Coord> = get_arrow_coords(5);
+    let arrow_coords: Vec<Coord> = get_arrow_coords(100);
     let mut shots: Vec<Shot> = Vec::new();
 
     // 2. For each coord in arrow_coords:
@@ -55,17 +55,30 @@ fn main() {
         //   B. Append the correct variant of `Shot` to the `shots` vector depending on the value of
         //   `coord.distance_from_center()`
         coord.distance_from_center();
+        if coord.distance_from_center()<1.0{
+            shots.push(Shot::Bullseye);
+        } else if coord.distance_from_center()<5.0{
+            shots.push(Shot::Hit { x: (coord.distance_from_center()) });
+        } else {
+            shots.push(Shot::Miss);
+        }
         //      - Less than 1.0 -- `Shot::Bullseye`
         
         //      - Between 1.0 and 5.0 -- `Shot::Hit(value)`
         //      - Greater than 5.0 -- `Shot::Miss`
+        
+    }
+    let mut total = 0;
+    for shot in &shots {
+        total+= shot.points();
+        println!("{}",shot.points());
     }
     
     
     
 
 
-    let mut total = 0;
+    
     // 3. Finally, loop through each shot in shots and add its points to total
 
     println!("Final point total is: {}", total);
