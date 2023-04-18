@@ -3,21 +3,43 @@
 
 // Someone is shooting arrows at a target.  We need to classify the shots.
 //
+
+
 // 1a. Create an enum called `Shot` with variants:
 // - `Bullseye`
 // - `Hit`, containing the distance from the center (an f64)
 // - `Miss`
+enum Shot {
+    Bullseye,
+    Hit {x: f64},
+    Miss
+}
 //
 // You will need to complete 1b as well before you will be able to run this program successfully.
-
+use Shot::*;
 impl Shot {
     // Here is a method for the `Shot` enum you just defined.
     fn points(self) -> i32 {
         // 1b. Implement this method to convert a Shot into points
-        // - return 5 points if `self` is a `Shot::Bullseye`
-        // - return 2 points if `self` is a `Shot::Hit(x)` where x < 3.0
-        // - return 1 point if `self` is a `Shot::Hit(x)` where x >= 3.0
-        // - return 0 points if `self` is a Miss
+        match self {
+            // - return 5 points if `self` is a `Shot::Bullseye`
+            Bullseye =>{
+                return 5;
+            },
+            Hit{x} => {
+               if x<3.0{
+                  // - return 2 points if `self` is a `Shot::Hit(x)` where x < 3.0
+                  return 2; 
+               } else {
+                  // - return 1 point if `self` is a `Shot::Hit(x)` where x >= 3.0
+                  return 1;
+               }
+            },
+            // - return 0 points if `self` is a Miss
+            Miss => {
+                return 0;
+            }
+        }
     }
 }
 
@@ -27,13 +49,20 @@ fn main() {
     let mut shots: Vec<Shot> = Vec::new();
 
     // 2. For each coord in arrow_coords:
-    //
-    //   A. Call `coord.print_description()`
-    //   B. Append the correct variant of `Shot` to the `shots` vector depending on the value of
-    //   `coord.distance_from_center()`
-    //      - Less than 1.0 -- `Shot::Bullseye`
-    //      - Between 1.0 and 5.0 -- `Shot::Hit(value)`
-    //      - Greater than 5.0 -- `Shot::Miss`
+    for coord in arrow_coords {
+        //   A. Call `coord.print_description()`
+        coord.print_description();
+        //   B. Append the correct variant of `Shot` to the `shots` vector depending on the value of
+        //   `coord.distance_from_center()`
+        coord.distance_from_center();
+        //      - Less than 1.0 -- `Shot::Bullseye`
+        
+        //      - Between 1.0 and 5.0 -- `Shot::Hit(value)`
+        //      - Greater than 5.0 -- `Shot::Miss`
+    }
+    
+    
+    
 
 
     let mut total = 0;

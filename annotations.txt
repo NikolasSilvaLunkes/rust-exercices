@@ -1,0 +1,30 @@
+
+
+#Variables
+let #Create variable
+let mut #Create a mutable variable
+EX: let mut my_num:i32
+
+#Functions
+& #Its a reference parameter
+.Clone() # Se o seu objeto implementa o atributo #[derive(Clone)] você pode criar uma copia do valor, fazendo com que o valor original não seja mudado
+&mut #A mesma coisa do & só que mutavel
+* #Caso você queira mudar um valor referenciado você deve colocar isso antes dele, é um ponteiro, que nem do C.
+EX: fn add_one(num:&mut i32){*num+=1}
+
+#Structs and traits
+#[derive(Debug)]
+struct Grapes {
+    amount_left: i32,
+}
+
+trait Bite {
+    fn bite(self: &mut Self) ->&str;
+}
+
+impl Bite for Grapes {
+    fn bite(&mut self) ->&str {
+        self.amount_left -= 1;
+        return &"You have bitten it"
+    }
+}

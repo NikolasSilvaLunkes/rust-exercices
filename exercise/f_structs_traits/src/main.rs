@@ -8,7 +8,7 @@
 //  trait Bite...
 
 trait Bite {
-    fn bite(&mut self) ->&str;
+    fn bite(self: &mut Self) ->&str;
 }
 
 // 2. Now create a struct named Grapes with a field that tracks how many grapes are left.  If you
