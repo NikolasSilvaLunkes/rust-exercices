@@ -28,3 +28,20 @@ impl Bite for Grapes {
         return &"You have bitten it"
     }
 }
+
+
+
+
+
+
+#Closures
+
+Closures are like anonymous/lambda functions
+
+let f = || {};
+let c = || {
+    println!("{}","a");
+}
+
+c();
+

@@ -17,7 +17,9 @@ fn expensive_sum(v: Vec<i32>) -> i32 {
     // will need to dereference it each time you use it in the expression like this: `*x`
     v.iter()
         // .filter() goes here
+        .filter(|&x| {x%2==0})
         // .map() goes here
+        .map(|&x| {x*2})
         .sum()
 }
 
@@ -26,13 +28,14 @@ fn pause_ms(ms: u64) {
 }
 
 fn main() {
-    let my_vector = vec![2, 5, 1, 0, 4, 3];
+    let my_vector:Vec<i32> = vec![2, 5, 1, 0, 4, 3];
 
     // 2. Spawn a child thread and have it call `expensive_sum(my_vector)`.  Store the returned
     // join handle in a variable called `handle`. Once you've done this you should be able to run
     // the code and see the Child thread output in the middle of the main thread's letters
     //
     //let handle = ...
+    println!("{}",expensive_sum(my_vector));
 
     // While the child thread is running, the main thread will also do some work
     for letter in vec!["a", "b", "c", "d", "e", "f"] {
